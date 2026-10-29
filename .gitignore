@@ -1,0 +1,12 @@
+bin/
+obj/
+.vs/
+.screenshots/
+LXLPCLData/
+LXLPCL.json
+LXLPCL_config_backup.json
+update_temp.zip
+_updater_temp.bat
+shot*.png
+*.user
+*.suo

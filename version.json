@@ -1,8 +1,8 @@
 {
-  "version": "1.0.0",
-  "version_name": "LXLPCL 1.0.0",
-  "release_date": "2026-10-29",
-  "download_url": "https://github.com/louxiaole/LXLPCL/releases/download/v1.0.0/LXLPCL-v1.0.0-win64.zip",
-  "file_size": 0,
-  "changelog_html": "首个正式版本"
+    "version":  "1.0.0",
+    "changelog_html":  "\u003cp\u003eLXLPCL 首个正式版。\u003c/p\u003e\u003cul\u003e\u003cli\u003e版本安装与管理、Modrinth 模组下载与中文翻译\u003c/li\u003e\u003cli\u003e皮肤编辑器（图层 / 3D 预览 / 行走模拟）与我的皮肤库\u003c/li\u003e\u003cli\u003e联机页支持局域网与樱花映射\u003c/li\u003e\u003cli\u003e新增 GitHub Release 自动检查更新\u003c/li\u003e\u003c/ul\u003e",
+    "version_name":  "LXLPCL v1.0.0 首个正式版",
+    "download_url":  "https://github.com/louxiaole/LXLPCL/releases/download/v1.0.0/LXLPCL-v1.0.0-win64.zip",
+    "file_size":  68377400,
+    "release_date":  "2026-10-29"
 }

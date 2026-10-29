@@ -1,0 +1,67 @@
+<Window x:Class="LXLPCL.UI.Windows.SkinViewerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:LXLPCL.UI.Controls"
+        Title="查看皮肤" Width="520" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent" ShowInTaskbar="False" ResizeMode="NoResize"
+        FontFamily="{StaticResource AppFont}">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="StageBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF343B46" Offset="0"/>
+            <GradientStop Color="#FF14171C" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Border Background="{DynamicResource SurfaceBrush}" CornerRadius="12"
+            BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+            Effect="{StaticResource LiftShadow}" Padding="18">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid MouseLeftButtonDown="Title_MouseLeftButtonDown">
+                <TextBlock x:Name="TitleText" Text="皮肤预览" FontSize="14.5" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+                <Button Style="{StaticResource GhostButton}" Content="&#xE711;" FontFamily="{StaticResource IconFont}"
+                        FontSize="12" HorizontalAlignment="Right" Padding="6,2" Click="Close_Click"
+                        ToolTip="关闭"/>
+            </Grid>
+
+            <Border Grid.Row="1" Margin="0,12,0,0" Height="380" CornerRadius="10"
+                    ClipToBounds="True" Background="{StaticResource StageBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <Grid>
+                    <controls:SkinModelView x:Name="ModelView" Interactive="True" Yaw="0" Zoom="1.15"/>
+                    <TextBlock Text="拖动旋转 · 滚轮缩放" FontSize="10.5" Margin="12"
+                               VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                               Foreground="{DynamicResource TextTertiaryBrush}" Opacity="0.85"/>
+                </Grid>
+            </Border>
+
+            <WrapPanel Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Center">
+                <Button Style="{StaticResource SecondaryButton}" Content="正面" FontSize="11.5" Padding="12,5"
+                        Margin="0,0,6,0" Click="View_Click" Tag="0"/>
+                <Button Style="{StaticResource SecondaryButton}" Content="右侧" FontSize="11.5" Padding="12,5"
+                        Margin="0,0,6,0" Click="View_Click" Tag="90"/>
+                <Button Style="{StaticResource SecondaryButton}" Content="背面" FontSize="11.5" Padding="12,5"
+                        Margin="0,0,6,0" Click="View_Click" Tag="180"/>
+                <Button Style="{StaticResource SecondaryButton}" Content="左侧" FontSize="11.5" Padding="12,5"
+                        Margin="0,0,6,0" Click="View_Click" Tag="-90"/>
+                <Button Style="{StaticResource SecondaryButton}" Content="俯视" FontSize="11.5" Padding="12,5"
+                        Click="TopView_Click"/>
+            </WrapPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+                <Button x:Name="EditButton" Style="{StaticResource SecondaryButton}" Content="编辑" MinWidth="80"
+                        Margin="0,0,10,0" Click="Edit_Click"/>
+                <Button x:Name="UseButton" Style="{StaticResource PrimaryButton}" Content="使用这张皮肤"
+                        MinWidth="110" Click="Use_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

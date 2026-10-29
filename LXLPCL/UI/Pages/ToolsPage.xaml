@@ -1,0 +1,289 @@
+<local:PageBase x:Class="LXLPCL.UI.Pages.ToolsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:LXLPCL"
+             FontFamily="{StaticResource AppFont}">
+    <local:PageBase.Resources>
+        <Style x:Key="ToolTileButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="9" Padding="12">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource HoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource PressedBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ToolTile" TargetType="Border">
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Background" Value="{DynamicResource AccentLightBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ToolTileText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </local:PageBase.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="4,0,0,14">
+            <TextBlock Text="工具箱" Style="{StaticResource PageTitleText}"/>
+            <TextBlock Text="日志、目录、缓存与常用链接" Style="{StaticResource CaptionText}" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- 快捷操作 -->
+                <Border Style="{StaticResource Card}" Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="快捷操作" Style="{StaticResource SectionTitleText}" Margin="4,0,0,0"/>
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ToolTileButton}" Click="OpenGameDir_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource ToolTile}">
+                                        <TextBlock Style="{StaticResource ToolTileText}" Text="MC"/>
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="游戏目录" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text=".minecraft 所在位置" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource ToolTileButton}" Click="OpenSaves_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource ToolTile}" Background="{DynamicResource SuccessLightBrush}">
+                                        <TextBlock Style="{StaticResource ToolTileText}" Text="SV" Foreground="{DynamicResource SuccessBrush}"/>
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="存档" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="saves 文件夹" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource ToolTileButton}" Click="OpenMods_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource ToolTile}" Background="{DynamicResource WarningLightBrush}">
+                                        <TextBlock Style="{StaticResource ToolTileText}" Text="MD" Foreground="{DynamicResource WarningBrush}"/>
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="模组" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="全局 mods 文件夹" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource ToolTileButton}" Click="OpenGameLogs_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource ToolTile}">
+                                        <TextBlock Style="{StaticResource ToolTileText}" Text="LG"/>
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="游戏日志" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="logs 文件夹" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource ToolTileButton}" Click="OpenLauncherLogs_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource ToolTile}" Background="{DynamicResource SuccessLightBrush}">
+                                        <TextBlock Style="{StaticResource ToolTileText}" Text="LX" Foreground="{DynamicResource SuccessBrush}"/>
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="启动器日志" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="LXLPCLData\logs" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource ToolTileButton}" Click="OpenJavaDir_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource ToolTile}" Background="{DynamicResource DangerLightBrush}">
+                                        <TextBlock Style="{StaticResource ToolTileText}" Text="JV" Foreground="{DynamicResource DangerBrush}"/>
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="Java" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="启动器下载的运行时" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 日志查看 -->
+                <Border Style="{StaticResource Card}" Padding="18" Margin="0,14,0,0">
+                    <StackPanel>
+                        <Grid Margin="4,0,4,0">
+                            <StackPanel>
+                                <TextBlock Text="日志查看" Style="{StaticResource SectionTitleText}"/>
+                                <TextBlock x:Name="LogPathText" Text="LXLPCLData\logs\latest.log" Style="{StaticResource HintText}"
+                                           Margin="0,3,0,0" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <RadioButton x:Name="LauncherLogChip" Style="{StaticResource FilterChip}" GroupName="LogSource"
+                                             Content="启动器日志" Tag="launcher" IsChecked="True" Checked="LogSource_Checked"/>
+                                <RadioButton x:Name="GameLogChip" Style="{StaticResource FilterChip}" GroupName="LogSource"
+                                             Content="游戏日志" Tag="game" Margin="6,0,0,0" Checked="LogSource_Checked"/>
+                                <Button Style="{StaticResource IconButton}" Content="&#xE72C;" Margin="12,0,0,0"
+                                        Click="RefreshLog_Click" ToolTip="刷新日志"/>
+                                <Button Style="{StaticResource IconButton}" Content="&#xE8C8;" Margin="4,0,0,0"
+                                        Click="CopyLog_Click" ToolTip="复制全部日志"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Background="#FF1D2027" CornerRadius="8" Margin="0,12,0,0" Padding="0">
+                            <TextBox x:Name="LogViewer" IsReadOnly="True" AcceptsReturn="True"
+                                     Background="Transparent" BorderThickness="0" Foreground="#FFD7DEE8"
+                                     FontFamily="Consolas, Cascadia Mono, Microsoft YaHei UI" FontSize="11.5"
+                                     Padding="12,10" VerticalScrollBarVisibility="Auto"
+                                     HorizontalScrollBarVisibility="Auto" TextWrapping="NoWrap"
+                                     SelectionBrush="#66FFFFFF" MinHeight="230" MaxHeight="320"/>
+                        </Border>
+                        <TextBlock x:Name="LogEmptyText" Text="暂无日志内容" Style="{StaticResource HintText}"
+                                   Margin="4,8,0,0" Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 系统与存储 + 链接 -->
+                <Grid Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="14"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Style="{StaticResource Card}" Padding="20">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="系统与存储" Style="{StaticResource SectionTitleText}"/>
+                                <Button Style="{StaticResource GhostButton}" Content="刷新" FontSize="11"
+                                        HorizontalAlignment="Right" Click="RefreshInfo_Click"/>
+                            </Grid>
+
+                            <Grid Margin="0,14,0,0">
+                                <TextBlock Text="游戏目录占用" Style="{StaticResource HintText}"/>
+                                <TextBlock x:Name="GameDirSizeText" Text="计算中..." FontSize="12"
+                                           HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                            </Grid>
+                            <Grid Margin="0,9,0,0">
+                                <TextBlock Text="缓存占用" Style="{StaticResource HintText}"/>
+                                <TextBlock x:Name="CacheSizeText" Text="-" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,9,0,0">
+                                <TextBlock Text="Java 运行时" Style="{StaticResource HintText}"/>
+                                <TextBlock x:Name="JavaCountText" Text="-" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,9,0,0">
+                                <TextBlock Text="已安装版本" Style="{StaticResource HintText}"/>
+                                <TextBlock x:Name="VersionCountText" Text="-" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,9,0,0">
+                                <TextBlock Text="系统内存" Style="{StaticResource HintText}"/>
+                                <TextBlock x:Name="MemoryInfoText" Text="-" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <Grid Margin="0,9,0,0">
+                                <TextBlock Text="启动器占用" Style="{StaticResource HintText}"/>
+                                <TextBlock x:Name="ProcessInfoText" Text="-" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Button Style="{StaticResource SecondaryButton}" Content="清理下载缓存" HorizontalAlignment="Left"
+                                    Margin="0,16,0,0" Padding="14,7" Click="ClearCache_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource Card}" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="常用链接" Style="{StaticResource SectionTitleText}"/>
+
+                            <Button Style="{StaticResource ToolTileButton}" Click="OpenPcl_Click" Margin="0,8,0,0" Padding="8,7">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="PCL2 开源项目" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="github.com/Hex-Dragon/PCL2" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="&#xE72A;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                                               Foreground="{DynamicResource TextTertiaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                            <Button Style="{StaticResource ToolTileButton}" Click="OpenModrinth_Click" Padding="8,7">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="Modrinth" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="模组、资源包与光影" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="&#xE72A;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                                               Foreground="{DynamicResource TextTertiaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                            <Button Style="{StaticResource ToolTileButton}" Click="OpenWiki_Click" Padding="8,7">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="Minecraft Wiki" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="中文 Minecraft 百科" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="&#xE72A;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                                               Foreground="{DynamicResource TextTertiaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                            <Button Style="{StaticResource ToolTileButton}" Click="OpenFabric_Click" Padding="8,7">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="Fabric" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="轻量模组加载器官网" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="&#xE72A;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                                               Foreground="{DynamicResource TextTertiaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                            <Button Style="{StaticResource ToolTileButton}" Click="OpenBmcl_Click" Padding="8,7">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="BMCLAPI" FontSize="12" FontWeight="SemiBold"/>
+                                        <TextBlock Text="国内镜像下载服务" Style="{StaticResource HintText}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="&#xE72A;" FontFamily="{StaticResource IconFont}" FontSize="12"
+                                               Foreground="{DynamicResource TextTertiaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</local:PageBase>

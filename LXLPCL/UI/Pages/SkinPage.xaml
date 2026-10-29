@@ -1,0 +1,637 @@
+<local:PageBase x:Class="LXLPCL.UI.Pages.SkinPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:LXLPCL"
+             FontFamily="{StaticResource AppFont}">
+    <local:PageBase.Resources>
+        <DrawingBrush x:Key="CheckerBrush" TileMode="Tile" Viewport="0,0,16,16" ViewportUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="#22FFFFFF" Geometry="M0,0 L16,0 16,16 0,16Z"/>
+                    <GeometryDrawing Brush="#11000000" Geometry="M0,0 L8,0 8,8 0,8Z M8,8 L16,8 16,16 8,16Z"/>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+
+        <Style x:Key="ToolRadio" TargetType="RadioButton">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,6,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Bd" CornerRadius="7" BorderThickness="1" Padding="8,5"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="{DynamicResource SurfaceAltBrush}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentLightBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ViewModeRadio" TargetType="RadioButton" BasedOn="{StaticResource ToolRadio}">
+            <Setter Property="Padding" Value="0,6"/>
+            <Setter Property="Width" Value="54"/>
+            <Setter Property="Margin" Value="0,0,4,0"/>
+        </Style>
+
+        <Style x:Key="SmallPillButton" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="6" BorderThickness="1" Padding="7,4"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="{DynamicResource SurfaceAltBrush}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource PressedBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BodyPartRadio" TargetType="RadioButton">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ToolTipService.InitialShowDelay" Value="200"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Bd" CornerRadius="3" BorderThickness="1" Background="#8B5CF6"
+                                BorderBrush="#00000000">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="0" Opacity="0.25" Color="#5B21B6"/>
+                            </Border.Effect>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#A78BFA"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#C4B5FD"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter TargetName="Bd" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RegionChip" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,6,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="6" BorderThickness="1" Padding="9,5"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="{DynamicResource SurfaceAltBrush}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ColorChip" TargetType="Button">
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Margin" Value="0,0,6,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="5" BorderThickness="1"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Background="{TemplateBinding Background}"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter TargetName="Bd" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SkinThumbButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,8,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="8" Padding="4" Background="{TemplateBinding Background}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource HoverBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </local:PageBase.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="4,0,0,14">
+            <StackPanel>
+                <TextBlock Text="皮肤制作" Style="{StaticResource PageTitleText}"/>
+                <TextBlock x:Name="SkinSubtitleText" Text="3D 绘制 · 图层 · 滤镜 · 旋转缩放 · 64×64"
+                           Style="{StaticResource CaptionText}" Margin="0,5,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Style="{StaticResource SecondaryButton}" Content="新建" Margin="0,0,8,0"
+                        Click="New_Click" ToolTip="清空画布，从头开始"/>
+                <Button Style="{StaticResource SecondaryButton}" Content="导入皮肤" Margin="0,0,8,0"
+                        Click="ImportSkin_Click" ToolTip="选择 64×64 的 PNG 皮肤"/>
+                <Button Style="{StaticResource SecondaryButton}" Content="导出 PNG" Margin="0,0,8,0"
+                        Click="ExportSkin_Click"/>
+                <Button x:Name="SaveSkinButton" Style="{StaticResource PrimaryButton}" Content="保存到皮肤库" Click="SaveSkin_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="14"/>
+                <ColumnDefinition Width="330"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 画布：3D / 2D / 分屏 -->
+            <Border Grid.Column="0" Style="{StaticResource Card}" Padding="14">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="2,0,2,10">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton x:Name="Mode3DRadio" Style="{StaticResource ViewModeRadio}" Content="3D"
+                                         GroupName="ViewMode" Tag="3d" IsChecked="True" Checked="Mode_Checked"/>
+                            <RadioButton x:Name="Mode2DRadio" Style="{StaticResource ViewModeRadio}" Content="2D"
+                                         GroupName="ViewMode" Tag="2d" Checked="Mode_Checked"/>
+                            <RadioButton x:Name="ModeSplitRadio" Style="{StaticResource ViewModeRadio}" Content="分屏"
+                                         GroupName="ViewMode" Tag="split" Checked="Mode_Checked"/>
+                        </StackPanel>
+                        <TextBlock Text="左键绘制 · 拖动旋转 · 滚轮缩放" FontSize="11" HorizontalAlignment="Right"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource TextTertiaryBrush}"/>
+                    </Grid>
+
+                    <Grid x:Name="CanvasHost" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="Col2D" Width="0"/>
+                            <ColumnDefinition x:Name="ColGap" Width="0"/>
+                            <ColumnDefinition x:Name="Col3D" Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="View2DHost" Grid.Column="0" Visibility="Collapsed" ClipToBounds="True"
+                              SizeChanged="Canvas_SizeChanged">
+                            <Grid x:Name="SkinCanvas" Width="576" Height="576"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  UseLayoutRounding="True"
+                                  RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                <Border CornerRadius="6" Background="{StaticResource CheckerBrush}"
+                                        BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"/>
+                                <Image x:Name="SkinImage" Width="576" Height="576" Stretch="Fill"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                       MouseLeftButtonDown="Canvas_MouseDown"
+                                       MouseMove="Canvas_MouseMove"
+                                       MouseLeftButtonUp="Canvas_MouseUp"
+                                       MouseLeave="Canvas_MouseLeave"/>
+                                <Image x:Name="SelectionImage" Width="576" Height="576" Stretch="Fill"
+                                       IsHitTestVisible="False"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <Canvas x:Name="GridOverlay" Width="576" Height="576" IsHitTestVisible="False"/>
+                            </Grid>
+                        </Grid>
+
+                        <Border x:Name="PreviewHost" Grid.Column="2" CornerRadius="8"
+                                Background="{DynamicResource SurfaceAltBrush}" ClipToBounds="True" Cursor="Cross"
+                                MouseLeftButtonDown="Preview_MouseDown" MouseMove="Preview_MouseMove"
+                                MouseLeftButtonUp="Preview_MouseUp" MouseWheel="Preview_MouseWheel">
+                            <Grid>
+                                <Border CornerRadius="8">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FF2B3038" Offset="0"/>
+                                            <GradientStop Color="#FF14171C" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <Viewport3D x:Name="PreviewViewport"/>
+                                <Button x:Name="WalkButton" Content="行走模式" Style="{StaticResource SmallPillButton}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"
+                                        Focusable="False" Click="WalkToggle_Click"
+                                        ToolTip="模拟游戏内行走：WASD 移动、空格跳跃、F5 切换视角、Esc 退出"/>
+                                <TextBlock x:Name="PartHintText" Text="头" FontSize="11" Margin="10"
+                                           HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                           Foreground="#FFB4BCC8" IsHitTestVisible="False"/>
+                                <TextBlock x:Name="RotateHintText" Text="拖动空白处旋转 · 滚轮缩放" FontSize="10" Margin="10"
+                                           HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                           Foreground="#FF8C95A3" IsHitTestVisible="False"/>
+                                <TextBlock x:Name="WalkHintText" Text="WASD 移动 · 空格跳跃 · F5 视角 · Esc 退出"
+                                           FontSize="10.5" Margin="10" HorizontalAlignment="Center"
+                                           VerticalAlignment="Bottom" Foreground="#FFB4BCC8"
+                                           Visibility="Collapsed" IsHitTestVisible="False"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Grid.Row="2" Margin="4,10,4,0">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="GridToggle" Content="像素网格" FontSize="12" IsChecked="True"
+                                      ToolTip="同时控制 2D 像素网格、3D 模型像素网格与 3D 地板网格"
+                                      Foreground="{DynamicResource TextSecondaryBrush}"
+                                      VerticalAlignment="Center" Checked="OverlayToggle_Changed" Unchecked="OverlayToggle_Changed"/>
+                            <CheckBox x:Name="PartToggle" Content="部位边界" FontSize="12" Margin="14,0,0,0"
+                                      Foreground="{DynamicResource TextSecondaryBrush}"
+                                      VerticalAlignment="Center" Checked="OverlayToggle_Changed" Unchecked="OverlayToggle_Changed"/>
+                            <CheckBox x:Name="UvToggle" Content="UV 布局" FontSize="12" Margin="14,0,0,0"
+                                      Foreground="{DynamicResource TextSecondaryBrush}"
+                                      VerticalAlignment="Center" Checked="OverlayToggle_Changed" Unchecked="OverlayToggle_Changed"/>
+                        </StackPanel>
+                        <TextBlock x:Name="CursorText" Text="—" FontSize="11" HorizontalAlignment="Right"
+                                   Foreground="{DynamicResource TextTertiaryBrush}" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- 右侧工具 -->
+            <ScrollViewer x:Name="RightSideScroll" Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <!-- 颜色 -->
+                    <Border Style="{StaticResource Card}" Padding="16">
+                        <StackPanel>
+                            <TextBlock Text="颜色" Style="{StaticResource SectionTitleText}"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                <Border x:Name="CurrentColorBox" Width="34" Height="34" CornerRadius="8"
+                                        BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1"/>
+                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock x:Name="CurrentColorText" Text="#E8B48F" FontSize="12"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="当前画笔颜色" FontSize="10"
+                                               Foreground="{DynamicResource TextTertiaryBrush}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                <Button Style="{StaticResource GhostButton}" Content="透明" FontSize="11"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Click="PickTransparent_Click"/>
+                            </StackPanel>
+
+                            <Grid x:Name="SvPanel" Height="116" Margin="0,12,0,0" Cursor="Cross" ClipToBounds="True"
+                                  MouseLeftButtonDown="Sv_MouseDown" MouseMove="Sv_MouseMove"
+                                  MouseLeftButtonUp="Sv_MouseUp">
+                                <Border CornerRadius="6" ClipToBounds="True">
+                                    <Grid>
+                                        <Border x:Name="SvHueLayer" CornerRadius="6"/>
+                                        <Border CornerRadius="6">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                        </Border>
+                                        <Border CornerRadius="6">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="#00000000" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Canvas IsHitTestVisible="False">
+                                    <Ellipse x:Name="SvThumb" Width="12" Height="12" Stroke="White"
+                                             StrokeThickness="2" Fill="Transparent"/>
+                                </Canvas>
+                            </Grid>
+
+                            <Grid x:Name="HueTrack" Height="18" Margin="0,8,0,0" Cursor="Hand"
+                                  MouseLeftButtonDown="Hue_MouseDown" MouseMove="Hue_MouseMove"
+                                  MouseLeftButtonUp="Hue_MouseUp">
+                                <Border Height="12" VerticalAlignment="Center" CornerRadius="6">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#FFFF0000" Offset="0"/>
+                                            <GradientStop Color="#FFFFFF00" Offset="0.1667"/>
+                                            <GradientStop Color="#FF00FF00" Offset="0.3333"/>
+                                            <GradientStop Color="#FF00FFFF" Offset="0.5"/>
+                                            <GradientStop Color="#FF0000FF" Offset="0.6667"/>
+                                            <GradientStop Color="#FFFF00FF" Offset="0.8333"/>
+                                            <GradientStop Color="#FFFF0000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <Canvas IsHitTestVisible="False">
+                                    <Border x:Name="HueThumb" Width="6" Height="18" CornerRadius="3" Background="White"
+                                            BorderBrush="#55000000" BorderThickness="1"/>
+                                </Canvas>
+                            </Grid>
+
+                            <Grid x:Name="AlphaTrack" Height="18" Margin="0,6,0,0" Cursor="Hand"
+                                  MouseLeftButtonDown="Alpha_MouseDown" MouseMove="Alpha_MouseMove"
+                                  MouseLeftButtonUp="Alpha_MouseUp">
+                                <Border Height="12" VerticalAlignment="Center" CornerRadius="6"
+                                        Background="{StaticResource CheckerBrush}"
+                                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"/>
+                                <Border x:Name="AlphaLayer" Height="12" VerticalAlignment="Center" CornerRadius="6"/>
+                                <Canvas IsHitTestVisible="False">
+                                    <Border x:Name="AlphaThumb" Width="6" Height="18" CornerRadius="3" Background="White"
+                                            BorderBrush="#55000000" BorderThickness="1"/>
+                                </Canvas>
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBox x:Name="ColorHexBox" Width="110" Height="32" Text="#E8B48F"
+                                         Style="{StaticResource PclTextBox}" VerticalContentAlignment="Center"/>
+                                <Button Style="{StaticResource SecondaryButton}" Content="应用颜色" Margin="8,0,0,0"
+                                        Click="ApplyHex_Click"/>
+                            </StackPanel>
+
+                            <TextBlock Text="最近使用" FontSize="11" Margin="0,10,0,0"
+                                       Foreground="{DynamicResource TextTertiaryBrush}"/>
+                            <WrapPanel x:Name="RecentPanel" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 工具 -->
+                    <Border Style="{StaticResource Card}" Padding="16" Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="工具" Style="{StaticResource SectionTitleText}"/>
+                            <WrapPanel Margin="0,12,0,0">
+                                <RadioButton x:Name="BrushRadio" Style="{StaticResource ToolRadio}" Content="画笔"
+                                             Tag="brush" GroupName="SkinTool" IsChecked="True" Checked="Tool_Checked"/>
+                                <RadioButton x:Name="EraserRadio" Style="{StaticResource ToolRadio}" Content="橡皮"
+                                             Tag="eraser" GroupName="SkinTool" Checked="Tool_Checked"/>
+                                <RadioButton x:Name="PickerRadio" Style="{StaticResource ToolRadio}" Content="吸管"
+                                             Tag="picker" GroupName="SkinTool" Checked="Tool_Checked"/>
+                                <RadioButton x:Name="FillRadio" Style="{StaticResource ToolRadio}" Content="填充"
+                                             Tag="fill" GroupName="SkinTool" Checked="Tool_Checked"/>
+                                <RadioButton x:Name="StampRadio" Style="{StaticResource ToolRadio}" Content="图章"
+                                             Tag="stamp" GroupName="SkinTool" Checked="Tool_Checked"
+                                             ToolTip="Alt+左键取样，之后按住左键平铺复制"/>
+                                <RadioButton x:Name="WandRadio" Style="{StaticResource ToolRadio}" Content="魔棒"
+                                             Tag="wand" GroupName="SkinTool" Checked="Tool_Checked"
+                                             ToolTip="按容差选中相连的相同颜色区域"/>
+                                <RadioButton x:Name="LassoRadio" Style="{StaticResource ToolRadio}" Content="套索"
+                                             Tag="lasso" GroupName="SkinTool" Checked="Tool_Checked"
+                                             ToolTip="拖动圈选任意形状的区域"/>
+                            </WrapPanel>
+
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="笔刷大小" FontSize="12" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <ComboBox x:Name="BrushSizeCombo" Width="92" HorizontalAlignment="Right"
+                                          Style="{StaticResource PclComboBox}" SelectionChanged="BrushSize_Changed"/>
+                            </Grid>
+                            <Grid Margin="0,8,0,0">
+                                <TextBlock Text="笔刷形状" FontSize="12" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <ComboBox x:Name="BrushShapeCombo" Width="92" HorizontalAlignment="Right"
+                                          SelectedIndex="0" Style="{StaticResource PclComboBox}">
+                                    <ComboBoxItem Content="方形"/>
+                                    <ComboBoxItem Content="圆形"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="填充容差" FontSize="12" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Slider x:Name="ToleranceSlider" Width="96" Minimum="0" Maximum="96" Value="0"
+                                            VerticalAlignment="Center" ValueChanged="Tolerance_Changed"/>
+                                    <TextBlock x:Name="ToleranceText" Text="0" Width="24" FontSize="11" Margin="6,0,0,0"
+                                               VerticalAlignment="Center" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource TextTertiaryBrush}"/>
+                                </StackPanel>
+                            </Grid>
+                            <CheckBox x:Name="SymmetryToggle" Content="左右对称绘制" FontSize="12" Margin="0,10,0,0"
+                                      Foreground="{DynamicResource TextSecondaryBrush}"/>
+
+                            <Border x:Name="SelectionPanel" Margin="0,10,0,0" Padding="8" CornerRadius="7"
+                                    Background="{DynamicResource AccentLightBrush}" Visibility="Collapsed">
+                                <StackPanel>
+                                    <TextBlock x:Name="SelectionText" Text="选区：0 像素" FontSize="11"
+                                               Foreground="{DynamicResource AccentTextBrush}"/>
+                                    <WrapPanel Margin="0,6,0,0">
+                                        <Button Style="{StaticResource SmallPillButton}" Content="填充选区" Tag="fill" Click="SelectionAction_Click"/>
+                                        <Button Style="{StaticResource SmallPillButton}" Content="删除选区" Tag="erase" Click="SelectionAction_Click"/>
+                                        <Button Style="{StaticResource SmallPillButton}" Content="描边" Tag="outline" Click="SelectionAction_Click"/>
+                                        <Button Style="{StaticResource SmallPillButton}" Content="取消" Tag="clear" Click="SelectionAction_Click"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Grid Margin="0,12,0,0">
+                                <Button Style="{StaticResource SecondaryButton}" Content="撤销 Ctrl+Z" Click="Undo_Click"/>
+                                <Button Style="{StaticResource SecondaryButton}" Content="重做 Ctrl+Y" HorizontalAlignment="Right"
+                                        Click="Redo_Click"/>
+                            </Grid>
+                            <Grid Margin="0,8,0,0">
+                                <Button Style="{StaticResource GhostButton}" Content="清空当前图层" Click="Clear_Click"/>
+                                <Button Style="{StaticResource GhostButton}" Content="重置为默认皮肤" HorizontalAlignment="Right"
+                                        Click="Template_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 图层 -->
+                    <Border Style="{StaticResource Card}" Padding="16" Margin="0,12,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="图层" Style="{StaticResource SectionTitleText}"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock x:Name="LayerSummaryText" Text="1 层" FontSize="11" HorizontalAlignment="Right"
+                                           VerticalAlignment="Center" Foreground="{DynamicResource TextTertiaryBrush}"/>
+                            </Grid>
+                            <WrapPanel Margin="0,10,0,0">
+                                <Button x:Name="AddLayerBtn" Style="{StaticResource SmallPillButton}" Content="新建图层" Click="AddLayer_Click"/>
+                                <Button x:Name="DuplicateLayerBtn" Style="{StaticResource SmallPillButton}" Content="复制图层" Click="DuplicateLayer_Click"/>
+                                <Button x:Name="MergeLayerBtn" Style="{StaticResource SmallPillButton}" Content="合并向下" Click="MergeLayer_Click"/>
+                                <Button x:Name="MoveLayerUpBtn" Style="{StaticResource SmallPillButton}" Content="上移" Click="MoveLayerUp_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="下移" Click="MoveLayerDown_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="删除图层" Click="DeleteLayer_Click"/>
+                            </WrapPanel>
+
+                            <StackPanel x:Name="LayerPanel" Margin="0,8,0,0"/>
+                            <TextBlock Text="新图层会添加在基础皮肤之上，基础皮肤锁定不可直接编辑"
+                                       FontSize="10" Margin="0,2,0,0" TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextTertiaryBrush}"/>
+
+                            <Grid Margin="0,8,0,0">
+                                <TextBlock Text="混合模式" FontSize="12" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <ComboBox x:Name="BlendCombo" Width="110" HorizontalAlignment="Right" SelectedIndex="0"
+                                          Style="{StaticResource PclComboBox}" SelectionChanged="Blend_Changed">
+                                    <ComboBoxItem Content="正常"/>
+                                    <ComboBoxItem Content="正片叠底"/>
+                                    <ComboBoxItem Content="滤色"/>
+                                    <ComboBoxItem Content="叠加"/>
+                                    <ComboBoxItem Content="变暗"/>
+                                    <ComboBoxItem Content="变亮"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="不透明度" FontSize="12" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Slider x:Name="LayerOpacitySlider" Width="96" Minimum="0" Maximum="100" Value="100"
+                                            VerticalAlignment="Center" ValueChanged="LayerOpacity_Changed"/>
+                                    <TextBlock x:Name="LayerOpacityText" Text="100%" Width="34" FontSize="11" Margin="6,0,0,0"
+                                               VerticalAlignment="Center" Foreground="{DynamicResource TextTertiaryBrush}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 滤镜 -->
+                    <Border Style="{StaticResource Card}" Padding="16" Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="滤镜" Style="{StaticResource SectionTitleText}"/>
+                            <TextBlock Text="作用于当前图层（无图层时自动新建）" FontSize="10" Margin="0,4,0,0"
+                                       Foreground="{DynamicResource TextTertiaryBrush}"/>
+                            <WrapPanel Margin="0,10,0,0">
+                                <Button Style="{StaticResource SmallPillButton}" Content="灰度" Tag="gray" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="亮度+" Tag="bright" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="亮度-" Tag="dark" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="对比度+" Tag="contrast" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="饱和+" Tag="saturate" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="去饱和" Tag="desaturate" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="色相 +15°" Tag="hue" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="色调分离" Tag="posterize" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="描边" Tag="outline" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="着色" Tag="tint" Click="Filter_Click"/>
+                                <Button Style="{StaticResource SmallPillButton}" Content="渐变" Tag="gradient" Click="Filter_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 身体部位 -->
+                    <Border Style="{StaticResource Card}" Padding="16" Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="身体部位" Style="{StaticResource SectionTitleText}"/>
+                            <Grid Margin="0,12,0,0">
+                                <TextBlock Text="模型" FontSize="12" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <ComboBox x:Name="ModelCombo" Width="170" HorizontalAlignment="Right" SelectedIndex="0"
+                                          Style="{StaticResource PclComboBox}" SelectionChanged="Model_Changed">
+                                    <ComboBoxItem Content="Classic（4px 手臂）"/>
+                                    <ComboBoxItem Content="Slim（3px 手臂）"/>
+                                </ComboBox>
+                            </Grid>
+                            <CheckBox x:Name="OuterToggle" Content="显示外层（帽子 / 外套）" FontSize="12" Margin="0,10,0,0"
+                                      IsChecked="True" Checked="Outer_Changed" Unchecked="Outer_Changed"/>
+
+                            <Canvas Width="140" Height="142" Margin="0,14,0,0" HorizontalAlignment="Center">
+                                <RadioButton x:Name="PartHead" Style="{StaticResource BodyPartRadio}" ToolTip="头 / 帽子"
+                                             GroupName="BodyPart" Tag="head" Canvas.Left="52" Canvas.Top="0"
+                                             Width="36" Height="34" IsChecked="True" Checked="Part_Checked"/>
+                                <RadioButton x:Name="PartBody" Style="{StaticResource BodyPartRadio}" ToolTip="身体 / 外套"
+                                             GroupName="BodyPart" Tag="body" Canvas.Left="52" Canvas.Top="40"
+                                             Width="36" Height="46" Checked="Part_Checked"/>
+                                <RadioButton x:Name="PartRightArm" Style="{StaticResource BodyPartRadio}" ToolTip="右臂 / 右袖"
+                                             GroupName="BodyPart" Tag="rightArm" Canvas.Left="28" Canvas.Top="42"
+                                             Width="20" Height="44" Checked="Part_Checked"/>
+                                <RadioButton x:Name="PartLeftArm" Style="{StaticResource BodyPartRadio}" ToolTip="左臂 / 左袖"
+                                             GroupName="BodyPart" Tag="leftArm" Canvas.Left="92" Canvas.Top="42"
+                                             Width="20" Height="44" Checked="Part_Checked"/>
+                                <RadioButton x:Name="PartRightLeg" Style="{StaticResource BodyPartRadio}" ToolTip="右腿 / 右裤"
+                                             GroupName="BodyPart" Tag="rightLeg" Canvas.Left="52" Canvas.Top="90"
+                                             Width="17" Height="50" Checked="Part_Checked"/>
+                                <RadioButton x:Name="PartLeftLeg" Style="{StaticResource BodyPartRadio}" ToolTip="左腿 / 左裤"
+                                             GroupName="BodyPart" Tag="leftLeg" Canvas.Left="71" Canvas.Top="90"
+                                             Width="17" Height="50" Checked="Part_Checked"/>
+                            </Canvas>
+
+                            <WrapPanel x:Name="RegionPanel" Margin="0,12,0,0"/>
+                            <TextBlock x:Name="PartHint" Text="点击部位切换，再看对应的区域" FontSize="11" Margin="0,2,0,0"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource TextTertiaryBrush}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 皮肤库 -->
+                    <Border Style="{StaticResource Card}" Padding="16" Margin="0,12,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="皮肤库" Style="{StaticResource SectionTitleText}" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Style="{StaticResource GhostButton}" Content="查看全部" FontSize="11"
+                                            Margin="0,0,4,0" Click="OpenMySkins_Click"/>
+                                    <Button Style="{StaticResource GhostButton}" Content="打开文件夹" FontSize="11"
+                                            Click="OpenSkinsFolder_Click"/>
+                                </StackPanel>
+                            </Grid>
+                            <CheckBox x:Name="PartReplaceToggle" Content="只替换所选身体部位（混搭）" FontSize="11" Margin="0,10,0,0"
+                                      Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            <TextBlock Text="点击缩略图载入画布" FontSize="11" Margin="0,4,0,0"
+                                       Foreground="{DynamicResource TextTertiaryBrush}"/>
+                            <ItemsControl x:Name="SkinLibrary" Margin="0,10,0,-8">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource SkinThumbButton}" Tag="{Binding}"
+                                                Click="SkinThumb_Click" ToolTip="{Binding Name}">
+                                            <StackPanel Width="62">
+                                                <Border Width="56" Height="56" CornerRadius="6" ClipToBounds="True"
+                                                        Background="{StaticResource CheckerBrush}"
+                                                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                                                    <Image Source="{Binding Image}" Stretch="UniformToFill"
+                                                           RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding Name}" FontSize="9" Margin="0,3,0,0"
+                                                           HorizontalAlignment="Center"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           Foreground="{DynamicResource TextTertiaryBrush}"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock x:Name="LibraryEmptyText" Text="还没有保存的皮肤" FontSize="11" Margin="0,6,0,0"
+                                       Foreground="{DynamicResource TextTertiaryBrush}" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</local:PageBase>
